@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'Delerium NCV';
+    src: url('./fonts/delerium-ncv.woff2') format('woff2'),
+    url('./fonts/delerium-ncv.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}

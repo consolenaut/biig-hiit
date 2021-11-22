@@ -1,6 +1,6 @@
 {
-  "short_name": "Ionic App",
-  "name": "My Ionic App",
+  "short_name": "Biig Hiit",
+  "name": "Biig Hiit",
   "icons": [
     {
       "src": "assets/icon/favicon.png",
@@ -12,10 +12,16 @@
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
+    },
+    {
+      "src": "assets/splash.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff"
+  "orientation": "portrait-primary",
+  "theme_color": "#1A1A1A",
+  "background_color": "#1A1A1A"
 }
