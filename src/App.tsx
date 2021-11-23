@@ -1,5 +1,6 @@
 // import { createGlobalStyle } from 'styled-components';
 
+import { useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -29,17 +30,21 @@ import './theme/variables.css';
 
 import './theme/fonts.css';
 
+// const DURATIONS = {
+//   work: 40,
+//   rest: 20,
+//   break: 60,
+// }
 
-const DURATIONS = {
-  work: 40,
-  rest: 20,
-  break: 60,
-}
-
-const TOTAL_STEPS = 6;
-const TOTAL_REPS = 2;
+// const TOTAL_STEPS = 6;
+// const TOTAL_REPS = 2;
 
 const App: React.FC = () => {
+  const [steps, setSteps] = useState(6);
+  const [reps, setReps] = useState(2);
+  const [work, setWork] = useState(40);
+  const [rest, setRest] = useState(20);
+  const [breakk, setBreakk] = useState(60);
 
   return (
     <>
@@ -51,11 +56,26 @@ const App: React.FC = () => {
             </Route>
 
             <Route path="/start" exact={true}>
-              <Start />
+              <Start 
+                steps={steps} 
+                setSteps={setSteps} 
+                reps={reps} 
+                setReps={setReps} 
+                work={work} 
+                setWork={setWork} 
+                rest={rest} 
+                setRest={setRest} 
+                breakk={breakk} 
+                setBreakk={setBreakk}  
+              />
             </Route>            
 
             <Route path="/running" exact={true}>
-              <Timer steps={TOTAL_STEPS} reps={TOTAL_REPS} durations={DURATIONS} />
+              <Timer 
+                steps={steps} 
+                reps={reps} 
+                durations={{ work, rest, break: breakk }} 
+              />
             </Route>
           </IonRouterOutlet>
         </IonReactRouter>
