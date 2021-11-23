@@ -57,7 +57,19 @@ const EndButton = styled.div<{ show?: boolean }>`
   bottom: 50px;
   left: 50%;
   margin-left: -50px;
-  display: ${({ show }) => show ? 'block' : 'none' };
+  display: ${({ show }) => show ? 'flex' : 'none' };
+
+  flex: 1 1 auto;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  font-size: 72px;
+  line-height: 72px;
+  color: #1a1a1a;
+  font-weight: 700;
+  font-family: Arial;
 `;
 
 const INITIAL_MODE = 'intro';
@@ -216,7 +228,7 @@ const transitionTo = (mode: string) => {
       <Circle circleSize={timerState.circleSize} circleColor={timerState.circleColor} shouldRumble={timerState.rumble} paused={!timerState.isRunning}>{timerState.message ? timerState.message : timerState.secondsRemaining}</Circle>
       <StepCounter paused={!timerState.isRunning}>{timerState.step}/{steps}</StepCounter>
       <RepCounter paused={!timerState.isRunning}>{timerState.rep}/{reps}</RepCounter>
-      <EndButton show={timerState.showEndButton} onClick={(e) => { e.stopPropagation(); playBack(); history.push("/start") }} />
+      <EndButton show={timerState.showEndButton} onClick={(e) => { e.stopPropagation(); playBack(); history.push("/start") }}>X</EndButton>
       { timerState.confetti && <Confetti width={window.innerWidth} height={window.innerHeight} /> }
     </Container>
   );

@@ -28,7 +28,19 @@ const Container = styled.div`
 const StartButton = styled.div`
   width: 100%;
   height: 100%;
-  background: #aaa;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  // border-top: 1px solid #ddd;
+
+  text-align: center;
+  font-size: 72px;
+  line-height: 72px;
+  color: #fff;
+  font-family: "Delerium NCV";
 `;
 
 interface StartProps {
@@ -67,7 +79,7 @@ const Start: React.FC<StartProps> = ({
       <QuantityPicker value={work} onChange={(value: number) => { playClick(); setWork(value); }} min={1} max={999} />
       <QuantityPicker value={rest} onChange={(value: number) => { playClick(); setRest(value); }} min={1} max={999} />
       <QuantityPicker value={breakk} onChange={(value: number) => { playClick(); setBreakk(value); }} min={1} max={999} />
-      <StartButton onClick={() => { playGo(); history.push("/running")}} />
+      <StartButton onClick={() => { playGo(); history.push("/running")}}>GO</StartButton>
       {/* <QuantityPicker min={1} max={99} value={steps} onChange={setSteps} />
       <QuantityPicker min={1} max={99} value={reps} onChange={setReps} />
       <QuantityPicker min={1} max={999} value={work} onChange={setWork} />

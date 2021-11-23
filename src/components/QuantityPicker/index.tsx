@@ -1,20 +1,19 @@
-// step
-// rep
-// work
-// rest
-// break
-// GO!
-import { useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from "react-router-dom";
-import { callbackify } from 'util';
-// import { QuantityPicker } from 'react-qty-picker';
 
-const Button = styled.div`
+const Button = styled.div<{ left?: boolean }>`
   width: 80%;
   height: 100%;
-//   border-radius: 50px;
-  background: #ccc;
+ 
+  font-size: 100px;
+  line-height: 100px;
+  color: #fff;
+  font-family: "Delerium NCV";
+  text-align: center;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Container = styled.div`
@@ -26,6 +25,7 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  // border-bottom: 1px solid #ddd;
 `;
 
 const Quantity = styled.h1`
@@ -56,7 +56,7 @@ const QuantityPicker: React.FC<QuantityPickerProps> = ({ onChange = () => {}, va
 
   return (
     <Container>
-        <Button onClick={decrementCount}>-</Button>
+        <Button left onClick={decrementCount}>-</Button>
         <Quantity>{value}</Quantity>
         <Button onClick={incrementCount}>+</Button>
     </Container>
