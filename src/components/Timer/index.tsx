@@ -10,7 +10,7 @@ import workSound from './sounds/work.m4a';
 import restSound from './sounds/rest.m4a';
 import breakSound from './sounds/break.m4a';
 
-import introSound from './sounds/intro.m4a';
+// import introSound from './sounds/intro.m4a';
 
 import backSound from './sounds/Checked.m4a';
 
@@ -31,7 +31,7 @@ const StepCounter = styled.h1<{ paused?: boolean }>`
   text-align: left;
   width: 100%;
   top: 0px;
-  left: 20px;
+  left: 30px;
   color: ${({ paused }) => paused ? '#666' : '#fff' };
   font-family: "Delerium NCV";
 `;
@@ -43,7 +43,7 @@ const RepCounter = styled.h1<{ paused?: boolean }>`
   text-align: right;
   width: 100%;
   top: 0px;
-  right: 20px;
+  right: 30px;
   color: ${({ paused }) => paused ? '#666' : '#fff' };
   font-family: "Delerium NCV";
 `;
@@ -79,13 +79,14 @@ interface TimerProps {
   steps: number;
   reps: number;
   durations: any;
+  playIntro: any;
 }
 
-const Timer: React.FC<TimerProps> = ({ steps, reps, durations }) => {
+const Timer: React.FC<TimerProps> = ({ steps, reps, durations, playIntro }) => {
   const history = useHistory();
   const [totalSize, setTotalSize] = useState(0);
   const [stepSize, setStepSize] = useState(0);
-  const [playIntro] = useSound(introSound);
+  // const [playIntro] = useSound(introSound);
   const [playPaused] = useSound(pausedSound);
   const [playUnpaused] = useSound(unpausedSound);
   const [playWork] = useSound(workSound);
@@ -145,6 +146,7 @@ const Timer: React.FC<TimerProps> = ({ steps, reps, durations }) => {
 
 const transitionTo = (mode: string) => {
     if (mode === 'intro') {
+      console.log("PLAYING INTRO");
       playIntro();
       updateTimerState({
         mode: 'intro',
@@ -178,7 +180,7 @@ const transitionTo = (mode: string) => {
         direction: 'out',
         shouldRumble: false,
         rumble: false,
-        circleSize: 60,
+        circleSize: 20,
       });
       setStepSize(totalSize/durations.rest);
     } else if (mode === 'break') {
@@ -211,7 +213,10 @@ const transitionTo = (mode: string) => {
     if (mode === 'intro') {
       transitionTo('work');
     } else if (mode === 'work') {
-      if (step === totalSteps) transitionTo('break');
+      if (step === totalSteps) {
+        if (rep === totalReps) transitionTo('done');
+        else transitionTo('break');
+      }
       else transitionTo('rest');
     } else if (mode === 'rest') {
       incrementStep();

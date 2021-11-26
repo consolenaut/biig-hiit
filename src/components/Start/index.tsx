@@ -1,18 +1,11 @@
-// step
-// rep
-// work
-// rest
-// break
-// GO!
-import { useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
 import useSound from 'use-sound';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 import QuantityPicker from '../QuantityPicker';
 
 import clickSound from './sounds/click.m4a';
-import goSound from './sounds/go.m4a';
 
 const Container = styled.div`
   width: 100%;
@@ -44,47 +37,30 @@ const StartButton = styled.div`
 `;
 
 interface StartProps {
-  steps: number;
-  setSteps: Function;
-  reps: number;
-  setReps: Function;
-  work: number;
-  setWork: Function;
-  rest: number;
-  setRest: Function;
-  breakk: number;
-  setBreakk: Function;
+  states: any,
+  setStates: Function,
 }
 
-const Start: React.FC<StartProps> = ({
-  steps,
-  setSteps, 
-  reps, 
-  setReps, 
-  work, 
-  setWork, 
-  rest, 
-  setRest, 
-  breakk, 
-  setBreakk,
-}) => {
+const hapticsImpactLight = async () => {
+  await Haptics.impact({ style: ImpactStyle.Light });
+};
+
+const hapticsImpactMedium = async () => {
+  await Haptics.impact({ style: ImpactStyle.Medium });
+};
+
+const Start: React.FC<StartProps> = ({ states, setStates }) => {
   const history = useHistory();
   const [playClick] = useSound(clickSound);
-  const [playGo] = useSound(goSound);
 
   return (
     <Container>
-      <QuantityPicker value={steps} onChange={(value: number) => { playClick(); setSteps(value); }} min={1} max={99} />
-      <QuantityPicker value={reps} onChange={(value: number) => { playClick(); setReps(value); }} min={1} max={99} />
-      <QuantityPicker value={work} onChange={(value: number) => { playClick(); setWork(value); }} min={1} max={999} />
-      <QuantityPicker value={rest} onChange={(value: number) => { playClick(); setRest(value); }} min={1} max={999} />
-      <QuantityPicker value={breakk} onChange={(value: number) => { playClick(); setBreakk(value); }} min={1} max={999} />
-      <StartButton onClick={() => { playGo(); history.push("/running")}}>GO</StartButton>
-      {/* <QuantityPicker min={1} max={99} value={steps} onChange={setSteps} />
-      <QuantityPicker min={1} max={99} value={reps} onChange={setReps} />
-      <QuantityPicker min={1} max={999} value={work} onChange={setWork} />
-      <QuantityPicker min={1} max={999} value={rest} onChange={setRest} />
-      <QuantityPicker min={1} max={999} value={breakk} onChange={setBreakk} /> */}
+      <QuantityPicker value={states.steps} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ steps: value }); }} min={1} max={99} />
+      <QuantityPicker value={states.reps} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ reps: value }); }} min={1} max={99} />
+      <QuantityPicker value={states.work} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ work: value }); }} min={1} max={999} />
+      <QuantityPicker value={states.rest} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ rest: value }); }} min={1} max={999} />
+      <QuantityPicker value={states.break} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ break: value }); }} min={1} max={999} />
+      <StartButton onClick={() => { hapticsImpactMedium(); playClick(); history.push("/running")}}>GO</StartButton>
     </Container>
   );
 };

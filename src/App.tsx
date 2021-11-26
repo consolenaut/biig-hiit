@@ -1,11 +1,10 @@
-// import { createGlobalStyle } from 'styled-components';
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-// import Home from './pages/Home';
-// import ViewMessage from './pages/ViewMessage';
+import { Storage, Drivers } from '@ionic/storage';
+import { Brightness } from '@ionic-native/brightness';
+
 import Timer from './components/Timer';
 import Start from './components/Start';
 
@@ -30,21 +29,58 @@ import './theme/variables.css';
 
 import './theme/fonts.css';
 
-// const DURATIONS = {
-//   work: 40,
-//   rest: 20,
-//   break: 60,
-// }
+import useSound from 'use-sound';
+import introSound from './components/Timer/sounds/intro.m4a';
 
-// const TOTAL_STEPS = 6;
-// const TOTAL_REPS = 2;
+const store = new Storage({
+  name: 'statesDb',
+  driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage],
+})
+
+const INITIAL_STEPS = 6;
+const INITIAL_REPS = 2;
+const INITIAL_WORK = 40;
+const INITIAL_REST = 20;
+const INITIAL_BREAK = 60;
+
+const INITIAL_STATES = {
+  steps: INITIAL_STEPS,
+  reps: INITIAL_REPS,
+  work: INITIAL_WORK,
+  rest: INITIAL_REST,
+  break: INITIAL_BREAK,
+}
 
 const App: React.FC = () => {
-  const [steps, setSteps] = useState(6);
-  const [reps, setReps] = useState(2);
-  const [work, setWork] = useState(40);
-  const [rest, setRest] = useState(20);
-  const [breakk, setBreakk] = useState(60);
+  const [states, setStates] = useState<any>(INITIAL_STATES);
+  const [playIntro] = useSound(introSound);
+
+  const persistStates = async (nextStates: any) => await store.set('states', JSON.stringify(nextStates));
+  const getPersistedStates = async () => await store.get('states');
+
+  useEffect(() => {
+    Brightness.setKeepScreenOn(true);
+		const setupStore = async () => {
+      await store.create();
+      console.log(store);
+      const storedStates = await getPersistedStates();
+
+      if (storedStates) { 
+        setStates(JSON.parse(storedStates)); 
+      } else {
+        await persistStates(INITIAL_STATES);
+        setStates(INITIAL_STATES);
+      } 
+		}
+
+		setupStore();
+	}, []);
+
+  const handleSetStates = async (change: any) => {
+    const nextStates = { ...states, ...change };
+    setStates(nextStates);
+    await persistStates(nextStates);
+  }
 
   return (
     <>
@@ -56,25 +92,15 @@ const App: React.FC = () => {
             </Route>
 
             <Route path="/start" exact={true}>
-              <Start 
-                steps={steps} 
-                setSteps={setSteps} 
-                reps={reps} 
-                setReps={setReps} 
-                work={work} 
-                setWork={setWork} 
-                rest={rest} 
-                setRest={setRest} 
-                breakk={breakk} 
-                setBreakk={setBreakk}  
-              />
+              <Start states={states} setStates={handleSetStates} />
             </Route>            
 
             <Route path="/running" exact={true}>
               <Timer 
-                steps={steps} 
-                reps={reps} 
-                durations={{ work, rest, break: breakk }} 
+                steps={states.steps} 
+                reps={states.reps} 
+                playIntro={playIntro}
+                durations={{ work: states.work, rest: states.rest, break: states.break }} 
               />
             </Route>
           </IonRouterOutlet>
