@@ -55,6 +55,7 @@ const INITIAL_STATES = {
 
 const App: React.FC = () => {
   const [states, setStates] = useState<any>(INITIAL_STATES);
+  const [storeCreated, setStoreCreated] = useState<boolean>(false);
   const [playIntro] = useSound(introSound);
 
   const persistStates = async (nextStates: any) => await store.set('states', JSON.stringify(nextStates));
@@ -69,9 +70,11 @@ const App: React.FC = () => {
 
       if (storedStates) { 
         setStates(JSON.parse(storedStates)); 
+        setStoreCreated(true);
       } else {
         await persistStates(INITIAL_STATES);
         setStates(INITIAL_STATES);
+        setStoreCreated(true);
       } 
 		}
 
@@ -84,6 +87,8 @@ const App: React.FC = () => {
     setStates(nextStates);
     await persistStates(nextStates);
   }
+
+  if (!storeCreated) return null;
 
   return (
     <>
