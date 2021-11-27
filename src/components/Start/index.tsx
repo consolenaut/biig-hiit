@@ -30,8 +30,8 @@ const StartButton = styled.div`
   // border-top: 1px solid #ddd;
 
   text-align: center;
-  font-size: 72px;
-  line-height: 72px;
+  font-size: 4.5rem;
+  line-height: 4.5rem;
   color: #fff;
   font-family: "Delerium NCV";
 `;

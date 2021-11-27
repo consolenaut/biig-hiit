@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
 import useSound from 'use-sound';
 
+import { ImCross } from 'react-icons/im';
+
 import pausedSound from './sounds/ClockSlow.m4a';
 import unpausedSound from './sounds/ClockFast.m4a';
 
 import workSound from './sounds/work.m4a';
 import restSound from './sounds/rest.m4a';
 import breakSound from './sounds/break.m4a';
-
-// import introSound from './sounds/intro.m4a';
 
 import backSound from './sounds/Checked.m4a';
 
@@ -65,8 +65,8 @@ const EndButton = styled.div<{ show?: boolean }>`
   align-items: center;
 
   text-align: center;
-  font-size: 72px;
-  line-height: 72px;
+  font-size: 50px;
+  line-height: 50px;
   color: #1a1a1a;
   font-weight: 700;
   font-family: Arial;
@@ -233,7 +233,7 @@ const transitionTo = (mode: string) => {
       <Circle circleSize={timerState.circleSize} circleColor={timerState.circleColor} shouldRumble={timerState.rumble} paused={!timerState.isRunning}>{timerState.message ? timerState.message : timerState.secondsRemaining}</Circle>
       <StepCounter paused={!timerState.isRunning}>{timerState.step}/{steps}</StepCounter>
       <RepCounter paused={!timerState.isRunning}>{timerState.rep}/{reps}</RepCounter>
-      <EndButton show={timerState.showEndButton} onClick={(e) => { e.stopPropagation(); playBack(); history.push("/start") }}>X</EndButton>
+      <EndButton show={timerState.showEndButton} onClick={(e) => { e.stopPropagation(); playBack(); history.push("/start") }}><ImCross /></EndButton>
       { timerState.confetti && <Confetti width={window.innerWidth} height={window.innerHeight} /> }
     </Container>
   );

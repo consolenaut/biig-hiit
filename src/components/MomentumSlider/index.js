@@ -10,7 +10,7 @@ const Container = styled.div`
   background: #1a1a1a;
   position: relative;
   flex: 1 1 auto;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #444;
 `;
 
 const Slider = ({ name, initialValue, onChange, min, max }) => {
@@ -28,7 +28,7 @@ const Slider = ({ name, initialValue, onChange, min, max }) => {
           if (oldIndex !== undefined) onChange(newIndex + min);
         },
         style: {
-          transform: [{scale: [0.4, 1]}],
+          transform: [{scale: [0.5, 1]}],
           opacity: [0.3, 1],
         }
       });
