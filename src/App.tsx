@@ -4,6 +4,7 @@ import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Storage, Drivers } from '@ionic/storage';
 import { Brightness } from '@ionic-native/brightness';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import Timer from './components/Timer';
 import Start from './components/Start';
@@ -13,7 +14,7 @@ import '@ionic/react/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
+// import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
 
 /* Optional CSS utils that can be commented out */
@@ -28,6 +29,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 import './theme/fonts.css';
+import './theme/general.css';
 
 import useSound from 'use-sound';
 import introSound from './components/Timer/sounds/intro.m4a';
@@ -77,6 +79,7 @@ const App: React.FC = () => {
 	}, []);
 
   const handleSetStates = async (change: any) => {
+    console.log("HANDLE", change);
     const nextStates = { ...states, ...change };
     setStates(nextStates);
     await persistStates(nextStates);
@@ -84,9 +87,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <IonApp>
         <IonReactRouter>
-          <IonRouterOutlet>
             <Route path="/" exact={true}>
               <Redirect to="/start" />
             </Route>
@@ -103,9 +104,7 @@ const App: React.FC = () => {
                 durations={{ work: states.work, rest: states.rest, break: states.break }} 
               />
             </Route>
-          </IonRouterOutlet>
         </IonReactRouter>
-      </IonApp>
     </>
   );
 };

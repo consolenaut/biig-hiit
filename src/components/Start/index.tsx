@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import useSound from 'use-sound';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
-import QuantityPicker from '../QuantityPicker';
+import Slider from '../MomentumSlider';
 
 import clickSound from './sounds/click.m4a';
 
@@ -42,6 +42,7 @@ interface StartProps {
 }
 
 const hapticsImpactLight = async () => {
+  console.log("CALLED");
   await Haptics.impact({ style: ImpactStyle.Light });
 };
 
@@ -55,12 +56,23 @@ const Start: React.FC<StartProps> = ({ states, setStates }) => {
 
   return (
     <Container>
-      <QuantityPicker value={states.steps} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ steps: value }); }} min={1} max={99} />
+      {/* <Slider name="steps" initialValue onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ steps: value }); }} />
+      <Slider name="reps" onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ reps: value }); }} />
+      <Slider name="work" /> */}
+      
+      <Slider name="steps" initialValue={states.steps} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ steps: value }); }} min={1} max={99} />
+      <Slider name="reps" initialValue={states.reps} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ reps: value }); }} min={1} max={99} />
+      <Slider name="work" initialValue={states.work} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ work: value }); }} min={1} max={999} />
+      <Slider name="rest" initialValue={states.rest} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ rest: value }); }} min={1} max={999} />
+      <Slider name="break" initialValue={states.break} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ break: value }); }} min={1} max={999} />
+      <StartButton onClick={() => { hapticsImpactMedium(); playClick(); history.push("/running")}}>GO</StartButton>
+
+      {/* <QuantityPicker value={states.steps} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ steps: value }); }} min={1} max={99} />
       <QuantityPicker value={states.reps} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ reps: value }); }} min={1} max={99} />
       <QuantityPicker value={states.work} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ work: value }); }} min={1} max={999} />
       <QuantityPicker value={states.rest} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ rest: value }); }} min={1} max={999} />
       <QuantityPicker value={states.break} onChange={(value: number) => { hapticsImpactLight(); playClick(); setStates({ break: value }); }} min={1} max={999} />
-      <StartButton onClick={() => { hapticsImpactMedium(); playClick(); history.push("/running")}}>GO</StartButton>
+      <StartButton onClick={() => { hapticsImpactMedium(); playClick(); history.push("/running")}}>GO</StartButton> */}
     </Container>
   );
 };

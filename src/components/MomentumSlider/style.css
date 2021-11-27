@@ -1,0 +1,35 @@
+.ms-container {
+  position: relative;
+  top: 50%;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  transform: translateY(-50%);
+}
+
+.ms-track {
+  position: relative;
+  /**  $ms-slide-width = 125px; **/
+  left: calc(50% - 62.5px); /** Centering #{125px / 2} **/
+  white-space: nowrap;
+  font-size: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  will-change: transform;
+}
+
+.ms-slide {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 125px; /** $ms-slide-width **/
+  height: 100%; /** $ms-slide-height **/
+  font-size: 100px;
+  font-family: "Delerium NCV";
+  color: #FFFFFF;
+  cursor: default;
+  user-select: none;
+  will-change: transform;
+}
