@@ -65,7 +65,6 @@ const App: React.FC = () => {
     Brightness.setKeepScreenOn(true);
 		const setupStore = async () => {
       await store.create();
-      console.log(store);
       const storedStates = await getPersistedStates();
 
       if (storedStates) { 
@@ -82,10 +81,11 @@ const App: React.FC = () => {
 	}, []);
 
   const handleSetStates = async (change: any) => {
-    console.log("HANDLE", change);
-    const nextStates = { ...states, ...change };
-    setStates(nextStates);
-    await persistStates(nextStates);
+    await setStates((currentState: any) => {
+      const nextState = { ...currentState, ...change };
+      persistStates(nextState);
+      return nextState;
+    });
   }
 
   if (!storeCreated) return null;
