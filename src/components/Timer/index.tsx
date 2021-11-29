@@ -146,7 +146,6 @@ const Timer: React.FC<TimerProps> = ({ steps, reps, durations, playIntro }) => {
 
 const transitionTo = (mode: string) => {
     if (mode === 'intro') {
-      console.log("PLAYING INTRO");
       playIntro();
       updateTimerState({
         mode: 'intro',
