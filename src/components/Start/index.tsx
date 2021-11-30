@@ -83,10 +83,11 @@ const Start: React.FC<StartProps> = ({ states, setStates }) => {
   return (
     <Container>
       <NotchSpacer />
-      <Slider name="steps" initialValue={states.steps} onChange={(value: number) => handleChange(value, 'steps')} min={1} max={99} tipColor='#B47759' />
-      <Slider name="reps" initialValue={states.reps} onChange={(value: number) => handleChange(value, 'reps')} min={1} max={99} tipColor='#B4904C' />
-      <Slider name="work" initialValue={states.work} onChange={(value: number) => handleChange(value, 'work')} min={1} max={999} tipColor='#889C6D' />
-      <Slider name="rest" initialValue={states.rest} onChange={(value: number) => handleChange(value, 'rest')} min={1} max={999} tipColor='#669B86' />
+
+      <Slider name="work" initialValue={states.work} onChange={(value: number) => handleChange(value, 'work')} min={1} max={999} tipColor='#B47759' />
+      <Slider name="rest" initialValue={states.rest} onChange={(value: number) => handleChange(value, 'rest')} min={1} max={999} tipColor='#B4904C' />
+      <Slider name="rounds" initialValue={states.steps} onChange={(value: number) => handleChange(value, 'steps')} min={1} max={99} tipColor='#889C6D' />
+      <Slider name="repeat" initialValue={states.reps} onChange={(value: number) => handleChange(value, 'reps')} min={1} max={99} tipColor='#669B86' />
       <Slider name="break" initialValue={states.break} onChange={(value: number) => handleChange(value, 'break')} min={1} max={999} tipColor='#508394' />
       <StartButton onClick={() => handleClick()}>GO</StartButton>
     </Container>
