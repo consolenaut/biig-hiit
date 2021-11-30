@@ -11,6 +11,7 @@ import unpausedSound from './sounds/ClockFast.m4a';
 import workSound from './sounds/work.m4a';
 import restSound from './sounds/rest.m4a';
 import breakSound from './sounds/break.m4a';
+import doneSound from './sounds/Done.m4a';
 
 import backSound from './sounds/Checked.m4a';
 
@@ -92,6 +93,7 @@ const Timer: React.FC<TimerProps> = ({ steps, reps, durations, playIntro }) => {
   const [playWork] = useSound(workSound);
   const [playRest] = useSound(restSound);
   const [playBreak] = useSound(breakSound);
+  const [playDone] = useSound(doneSound);
   const [playBack] = useSound(backSound);
 
   const [timerState, setTimerState] = useState({
@@ -193,7 +195,7 @@ const transitionTo = (mode: string) => {
         rumble: false,
       });
     } else if (mode === 'done') {
-      playPaused();
+      playDone();
       updateTimerState({
         mode: 'done',
         isRunning: false,
