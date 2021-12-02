@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
 import useSound from 'use-sound';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
@@ -6,12 +6,6 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import Slider from '../MomentumSlider';
 
 import clickSound from './sounds/click.m4a';
-
-const fadeOut = keyframes`
-  0% {opacity: 1;}
-  60% {opacity: 1;}
-  100% {opacity: 0;} 
-`;
 
 
 const Container = styled.div`
@@ -27,10 +21,8 @@ const Container = styled.div`
 
 const NotchSpacer = styled.div`
   width: 100%;
-  height: 82px;
+  height: 182px;
   display: block;
-  background: #B47759;
-  animation: ${fadeOut} 6s normal forwards linear;
 `;
 
 const StartButton = styled.div`
