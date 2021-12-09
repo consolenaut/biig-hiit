@@ -7,7 +7,6 @@ import Slider from '../MomentumSlider';
 
 import clickSound from './sounds/click.m4a';
 
-
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -34,8 +33,6 @@ const StartButton = styled.div`
   justify-content: center;
   align-items: center;
 
-  // border-top: 1px solid #ddd;
-
   text-align: center;
   font-size: 4.5rem;
   line-height: 4.5rem;
@@ -48,12 +45,9 @@ interface StartProps {
   setStates: Function,
 }
 
-const hapticsImpactLight = async () => {
-  await Haptics.impact({ style: ImpactStyle.Light });
-};
-
-const hapticsImpactMedium = async () => {
-  await Haptics.impact({ style: ImpactStyle.Medium });
+const hapticsImpact = async hapticType => {
+  await Haptics.impact({ style: hapticType });
+  playClick(); 
 };
 
 const Start: React.FC<StartProps> = ({ states, setStates }) => {
@@ -61,26 +55,26 @@ const Start: React.FC<StartProps> = ({ states, setStates }) => {
   const [playClick] = useSound(clickSound);
 
   const handleChange = (value: number, field: string) => {
-    hapticsImpactLight(); 
-    playClick(); 
+    hapticsImpact(ImpactStyle.Light); 
     setStates({ [field]: value });
   }
 
   const handleClick = () => {
-    hapticsImpactMedium(); 
-    playClick(); 
+    hapticsImpact(ImpactStyle.Medium);
     history.push("/running")
   }
+  
+  const StyledSlider = (name, tipColor, max) => <Slider name initialValue={states[name]} onChange={(value: number) => handleChange(value, name)} min={1} max tipColor />
 
   return (
     <Container>
       <NotchSpacer />
-
-      <Slider name="work" initialValue={states.work} onChange={(value: number) => handleChange(value, 'work')} min={1} max={999} tipColor='#B47759' />
-      <Slider name="rest" initialValue={states.rest} onChange={(value: number) => handleChange(value, 'rest')} min={1} max={999} tipColor='#B4904C' />
-      <Slider name="rounds" initialValue={states.steps} onChange={(value: number) => handleChange(value, 'steps')} min={1} max={99} tipColor='#889C6D' />
-      <Slider name="repeat" initialValue={states.reps} onChange={(value: number) => handleChange(value, 'reps')} min={1} max={99} tipColor='#669B86' />
-      <Slider name="break" initialValue={states.break} onChange={(value: number) => handleChange(value, 'break')} min={1} max={999} tipColor='#508394' />
+      
+      <StyledSlider name='work' tipColor='#B47759' max={99} />
+      <StyledSlider name='rest' tipColor='#B4904C' max={999} />
+      <StyledSlider name='steps' tipColor='#889C6D' max={99} />
+      <StyledSlider name='reps' tipColor='#669B86' max={99} />
+      <StyledSlider name='break' tipColor='#508394' max={999} />
       <StartButton onClick={() => handleClick()}>GO</StartButton>
     </Container>
   );
