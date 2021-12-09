@@ -33,8 +33,6 @@ const StartButton = styled.div`
   justify-content: center;
   align-items: center;
 
-  // border-top: 1px solid #ddd;
-
   text-align: center;
   font-size: 4.5rem;
   line-height: 4.5rem;
@@ -47,12 +45,9 @@ interface StartProps {
   setStates: Function,
 }
 
-const hapticsImpactLight = async () => {
-  await Haptics.impact({ style: ImpactStyle.Light });
-};
-
-const hapticsImpactMedium = async () => {
-  await Haptics.impact({ style: ImpactStyle.Medium });
+const hapticsImpact = async hapticType => {
+  await Haptics.impact({ style: hapticType });
+  playClick(); 
 };
 
 const Start: React.FC<StartProps> = ({ states, setStates }) => {
@@ -60,14 +55,12 @@ const Start: React.FC<StartProps> = ({ states, setStates }) => {
   const [playClick] = useSound(clickSound);
 
   const handleChange = (value: number, field: string) => {
-    hapticsImpactLight(); 
-    playClick(); 
+    hapticsImpact(ImpactStyle.Light); 
     setStates({ [field]: value });
   }
 
   const handleClick = () => {
-    hapticsImpactMedium(); 
-    playClick(); 
+    hapticsImpact(ImpactStyle.Medium);
     history.push("/running")
   }
 
