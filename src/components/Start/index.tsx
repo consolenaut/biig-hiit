@@ -7,7 +7,6 @@ import Slider from '../MomentumSlider';
 
 import clickSound from './sounds/click.m4a';
 
-
 const Container = styled.div`
   width: 100%;
   height: 100%;
